@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><title>自定义吧</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/967d1b4e659cc37a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/967d1b4e659cc37a.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-87b3a303122f2f0d.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-b05cd08c4a1aceb2.js" defer=""></script><script src="/_next/static/chunks/pages/_app-8d844a22b5bc2cbf.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bpost-id%5D-96780f90c6619010.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_buildManifest.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div>HTTP请求头<br/>2023-02-22 03:03:10<br/><div><h1>跨域-CORS头(是否允许跨域站点访问服务器的资源)</h1>
+<pre><code>// 指定允许访问该资源的域名，可以使用通配符 * 表示允许所有域名访问
+Access-Control-Allow-Origin:'*'
+// 指定允许的方法
+Access-Control-Allow-Methods:'GET, POST, PUT, DELETE'
+// 指定允许的HTTP头，如Content-Type、Authorization等
+Access-Control-Allow-Headers:'Content-Type, Authorization'
+</code></pre>
+<p>在客户端发起跨域请求之前，浏览器会发送一个预检请求（OPTIONS请求）到服务器，以确定该服务器是否支持跨域请求。只有在服务器响应预检请求并允许跨域请求时，浏览器才会发送实际的跨域请求。
+实际上，JavaScript本身是没有跨域限制的，跨域限制是由浏览器的安全策略所引入的。浏览器为了保护用户隐私和安全，对跨域资源的访问进行了限制。
+浏览器限制了脚本通过XMLHttpRequest或Fetch API等方式访问来自不同源的资源，这就是所谓的<strong>同源策略</strong>。同源策略的基本原则是：不允许通过脚本访问来自不同源的资源，除非这些资源明确地允许跨域访问。同源策略要求脚本只能与与其来源协议、主机名和端口号相同的文档交互。<br>
+</p>
+<h1>缓存策略</h1>
+<p>当请求资源时，如果本地有缓存，且max-age没有过期，就携带If-Modified-Since头部，发给服务器进行验证。Last-Modified表示文件的修改时间</p>
+<pre><code>Last-Modified: Wed, 24 Feb 2021 08:00:00 GMT
+</code></pre>
+<p>服务器收到请求后，会去查询对应文件的元数据[元数据中保存了文件最后一次被修改的时间]，并与客户端传过来的值进行比较。比较之后会出现两种情况：</p>
+<ul>
+<li>资源没有被修改，服务器会返回304，让客户端加载本地资源
+<pre><code>HTTP/1.1 304 Not Modified
+</code></pre>
+</li>
+<li>如果资源修改了，就返回200，把最新的内容和Last-Modified发给客户端
+<pre><code>HTTP/1.1 200 No Content
+Last-Modified: Wed, 24 Feb 2021 08:00:00 GMT
+Cache-Control: max-age=60
+
+body中包含请求的资源内容
+</code></pre>
+</li>
+</ul>
+<h1>防盗链(服务器可以通过防盗链获得请求来源，从一定程序上避免非法请求)</h1>
+<p>是指在网站A中引用了另一个网站B上的图片、视频、音频等资源，而不是将这些资源下载到自己的网站上并在自己的服务器上进行托管。这种行为会导致网站B的流量被消耗，而网站A则可以免费使用网站B的资源，因此被称为盗链</p>
+<p>配置HTTP响应头部，只允许指定的域名或IP地址访问该资源。可以使用Referer或Origin请求头部来验证请求的来源。</p>
+<h1><code>Accept和</code>和<code>Content-Type</code></h1>
+<p>客户端请求时发送accept类型
+Accept: text/html
+比如这里，就是告诉浏览器，我可以接收<code>text/html</code>类型，如果服务器返回的<code>Content-Type</code>刚好是<code>text/html</code>类型，那么内容会被展示在浏览器内；如果服务器返回的是其他MIME，且携带<code>Disposition</code>头，则会触发下载
+注意：有Disposition=attachment头一定会触发下载，即使accept类型和content-type类型匹配</p>
+</div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postDetail":{"id":"202302220303","contentHtml":"\u003ch1\u003e跨域-CORS头(是否允许跨域站点访问服务器的资源)\u003c/h1\u003e\n\u003cpre\u003e\u003ccode\u003e// 指定允许访问该资源的域名，可以使用通配符 * 表示允许所有域名访问\nAccess-Control-Allow-Origin:'*'\n// 指定允许的方法\nAccess-Control-Allow-Methods:'GET, POST, PUT, DELETE'\n// 指定允许的HTTP头，如Content-Type、Authorization等\nAccess-Control-Allow-Headers:'Content-Type, Authorization'\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e在客户端发起跨域请求之前，浏览器会发送一个预检请求（OPTIONS请求）到服务器，以确定该服务器是否支持跨域请求。只有在服务器响应预检请求并允许跨域请求时，浏览器才会发送实际的跨域请求。\n实际上，JavaScript本身是没有跨域限制的，跨域限制是由浏览器的安全策略所引入的。浏览器为了保护用户隐私和安全，对跨域资源的访问进行了限制。\n浏览器限制了脚本通过XMLHttpRequest或Fetch API等方式访问来自不同源的资源，这就是所谓的\u003cstrong\u003e同源策略\u003c/strong\u003e。同源策略的基本原则是：不允许通过脚本访问来自不同源的资源，除非这些资源明确地允许跨域访问。同源策略要求脚本只能与与其来源协议、主机名和端口号相同的文档交互。\u003cbr\u003e\n\u003c/p\u003e\n\u003ch1\u003e缓存策略\u003c/h1\u003e\n\u003cp\u003e当请求资源时，如果本地有缓存，且max-age没有过期，就携带If-Modified-Since头部，发给服务器进行验证。Last-Modified表示文件的修改时间\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eLast-Modified: Wed, 24 Feb 2021 08:00:00 GMT\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e服务器收到请求后，会去查询对应文件的元数据[元数据中保存了文件最后一次被修改的时间]，并与客户端传过来的值进行比较。比较之后会出现两种情况：\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e资源没有被修改，服务器会返回304，让客户端加载本地资源\n\u003cpre\u003e\u003ccode\u003eHTTP/1.1 304 Not Modified\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/li\u003e\n\u003cli\u003e如果资源修改了，就返回200，把最新的内容和Last-Modified发给客户端\n\u003cpre\u003e\u003ccode\u003eHTTP/1.1 200 No Content\nLast-Modified: Wed, 24 Feb 2021 08:00:00 GMT\nCache-Control: max-age=60\n\nbody中包含请求的资源内容\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e防盗链(服务器可以通过防盗链获得请求来源，从一定程序上避免非法请求)\u003c/h1\u003e\n\u003cp\u003e是指在网站A中引用了另一个网站B上的图片、视频、音频等资源，而不是将这些资源下载到自己的网站上并在自己的服务器上进行托管。这种行为会导致网站B的流量被消耗，而网站A则可以免费使用网站B的资源，因此被称为盗链\u003c/p\u003e\n\u003cp\u003e配置HTTP响应头部，只允许指定的域名或IP地址访问该资源。可以使用Referer或Origin请求头部来验证请求的来源。\u003c/p\u003e\n\u003ch1\u003e\u003ccode\u003eAccept和\u003c/code\u003e和\u003ccode\u003eContent-Type\u003c/code\u003e\u003c/h1\u003e\n\u003cp\u003e客户端请求时发送accept类型\nAccept: text/html\n比如这里，就是告诉浏览器，我可以接收\u003ccode\u003etext/html\u003c/code\u003e类型，如果服务器返回的\u003ccode\u003eContent-Type\u003c/code\u003e刚好是\u003ccode\u003etext/html\u003c/code\u003e类型，那么内容会被展示在浏览器内；如果服务器返回的是其他MIME，且携带\u003ccode\u003eDisposition\u003c/code\u003e头，则会触发下载\n注意：有Disposition=attachment头一定会触发下载，即使accept类型和content-type类型匹配\u003c/p\u003e\n","title":"HTTP请求头","date":"2023-02-22 03:03:10","cover":null,"category":["编程"]}},"__N_SSG":true},"page":"/posts/[post-id]","query":{"post-id":"202302220303"},"buildId":"r8IffH4Rot9nkeUOtVAIa","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

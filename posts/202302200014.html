@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><title>自定义吧</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/967d1b4e659cc37a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/967d1b4e659cc37a.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-87b3a303122f2f0d.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-b05cd08c4a1aceb2.js" defer=""></script><script src="/_next/static/chunks/pages/_app-8d844a22b5bc2cbf.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bpost-id%5D-96780f90c6619010.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_buildManifest.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div>Linux和Mac常用命令<br/>2023-02-20 00:14:32<br/><div><h1>命令行工具缓存清理 - 通用思路</h1>
+<h1><code>fd</code>命令：搜索文件和文件夹</h1>
+<pre><code>sudo fd --hidden --no-ignore --exclude /System/Volumes -t d --prune --ignore-case hello-world .
+</code></pre>
+<ul>
+<li>--hidden 搜索隐藏文件，MacOs下隐藏文件默认以<code>.</code>开头</li>
+<li>--no-ignore 不要忽略任何文件，如.gitignore</li>
+<li>--exclude 排除某个特定目录也可以使用管道符进行二次过滤</li>
+<li>-t 文件类型 <code>d</code>表示文件夹 <code>f</code>表示文件</li>
+<li>--prune 这个很有意思。例如要找目录<code>book</code>，匹配到<code>/a/b/book</code>后，就会停止查找子目录。避免book目录下还有其他文件夹也叫book，重复查找，属于是浪费时间了。如果搜索的类型是<code>f</code>，那么这个参数就不起作用。</li>
+<li>--ignore-case 搜索时忽略大小写</li>
+</ul>
+<h1><code>rg</code> 字符串搜索</h1>
+<pre><code>sudo rg --hidden --no-ignore -g '!/System/Volumes/Data/**' --files-with-matches -i hello-world .
+</code></pre>
+<ul>
+<li><code>--hidden</code> 搜索隐藏文件</li>
+<li><code>--no-ignore</code> 搜索ignore文件</li>
+<li><code>-g,--glob</code> 这是glob语法，加<code>!</code>可用来排除某些文件夹的也可以使用管道符进行二次过滤</li>
+<li><code>-l,--files-with-matches</code> 输出时只显示匹配到的文件名，不会打印具体的行，如果想输出具体的内容，就不要这个参数</li>
+<li><code>--files-without-match</code> 反选，只输出未匹配到的文件</li>
+<li><code>--invert-match</code> 反选，只输出未匹配到的行</li>
+<li><code>-i</code> 搜索关键字忽略大小写</li>
+</ul>
+<h1><code>trash</code>适用于Mac，将删除的内容放到回收站</h1>
+<pre><code># 删除文件
+trash file.txt
+
+# 删除目录
+trash -r dir
+</code></pre>
+<h1><code>xargs</code></h1>
+<blockquote>
+<p>xargs，将输入数据转换为参数列表传递给其他命令。例如：<code>ls</code>命令列出当前目录下所有的文件，xargs就会把所有文件名组装成一个列表传递给下一条语句执行。有些命令无法通过管道符进行操作，这就是xargs存在的意义。</p>
+</blockquote>
+<h3>命令的基本语法如下：</h3>
+<pre><code>command | xargs [options] [command]
+</code></pre>
+<ul>
+<li><code>command</code> 上一条执行的命令，如<code>ls</code>、<code>grep</code>、<code>find</code></li>
+<li><code>options</code> 一些选项，可以用来控制xargs的行为</li>
+<li><code>[command]</code> 这条命令用于接收xargs传过来的参数。，默认是echo，也就是把xargs的参数列表打印出来</li>
+</ul>
+<pre><code># 把当前目录下名字包含hello的文件删除
+ls -al | grep hello | xargs trash
+</code></pre>
+<h1><code>curl</code>命令</h1>
+<pre><code># 请求网址，并打印出http的请求过程
+curl -vIL https://www.baidu.com
+# 将baidu.com的首页保存到本地
+curl -OL https://baidu.com
+</code></pre>
+<ul>
+<li>-v 打印完整信息，分析http请求的时候很有用，连三次握手🤝都打印出来了，很给力</li>
+<li>-L 跟踪网址的重定向，如果不加这个参数，有些网址有重定向，它就不会继续请求</li>
+<li>-i 打印响应头和响应body</li>
+<li>-I 只打印响应头</li>
+<li>-o 将output输出到指定的文件,如<code>/dev/null</code>或者<code>test.abc</code></li>
+<li>-O 将文件写入到本地，文件名=远程资源的文件名，如远程资源为exapmle.com/file/1.txt,那么下载到本地就是1.txt</li>
+<li>-s slient模式，不打印progress和error信息</li>
+<li>-S show an error message if it fails</li>
+<li>--connect-timeout 超时，单位：秒</li>
+<li>--write-out 可以打印出很多东西，我认为最有价值的就是能够打印出整个网络请求执行时间
+<pre><code>curl -sSL -o /dev/null --connect-timeout 5 --write-out \
+"\n
+[%{time_namelookup}]->域名解析\n
+(进行三次握手)\n
+[%{time_pretransfer}]->准备传输数据\n
+(重定向耗时:%{time_redirect} 时间为0说明不需要重定向)\n
+[%{time_starttransfer}]->开始传输第一个字节\n
+[%{time_total}]->结束" \
+https://example.com
+</code></pre>
+</li>
+</ul>
+<h1><code>wget</code>命令</h1>
+<pre><code># 可分析http请求链
+wget https://baidu.com --debug -O /dev/null
+</code></pre>
+<blockquote>
+<p>输出信息包括了HTTP请求和响应头，以及网络请求过程中的详细信息</p>
+</blockquote>
+<pre><code>--2023-02-22 23:30:09--  https://www.baidu.com/
+Certificates loaded: 137
+正在解析主机 www.baidu.com (www.baidu.com)... 104.193.88.123, 104.193.88.77
+Caching www.baidu.com => 104.193.88.123 104.193.88.77
+正在连接 www.baidu.com (www.baidu.com)|104.193.88.123|:443... 已连接。
+Created socket 4.
+Releasing 0x0000561d53929890 (new refcount 1).
+
+---request begin---
+GET / HTTP/1.1
+User-Agent: Wget/1.20.1 (linux-gnu)
+Accept: */*
+Accept-Encoding: identity
+Host: www.baidu.com
+Connection: Keep-Alive
+
+---request end---
+已发出 HTTP 请求，正在等待回应...
+---response begin---
+HTTP/1.1 200 OK
+Content-Length: 2381
+Content-Type: text/html
+Date: Wed, 22 Feb 2023 15:30:10 GMT
+Server: bfe
+
+---response end---
+200 OK
+</code></pre>
+<h1><code>brew</code></h1>
+<h2>清理缓存</h2>
+<pre><code># Remove all cache files older than specified days. If you want to remove everything, use --prune=all
+brew cleanup --prune=all
+
+# Scrub(means a thorough wash or clean) the cache, including downloads for even the latest versions. Note that downloads for any installed formulae or casks will still not be deleted
+brew cleanup -s
+
+# Uninstall formulae that were only installed as a dependency of another formula and are now no longer needed.
+brew autoremove
+</code></pre>
+<h1>后台进程管理</h1>
+<ul>
+<li>
+<p><code>systemd</code>是Linux系统中默认的系统和服务管理器，可以用于管理和控制各种系统服务，包括启动、停止、重启、自启动等</p>
+</li>
+<li>
+<p><code>supervisor</code>它适用于需要管理多个进程的环境，例如Web服务器、应用服务器等</p>
+<p>#也可以通过-c参数指定某一个配置
+supervisord -c /etc/supervisor/conf.d
+</p>
+</li>
+<li>
+<p><code>nohup</code>用于在后台运行进程，可以忽略终端断开信号，即使关闭终端也能让进程继续运行。比如某些临时任务，通过代码对资料进行备份
+有时候用这个命令会比较方便，不需要写配置信息啥的</p>
+</li>
+<li>
+<p><code>screen</code>当需要通过SSH等协议登录远程主机时，使用Screen可以保持会话的持久性，避免连接断开导致的中断</p>
+</li>
+</ul>
+</div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postDetail":{"id":"202302200014","contentHtml":"\u003ch1\u003e命令行工具缓存清理 - 通用思路\u003c/h1\u003e\n\u003ch1\u003e\u003ccode\u003efd\u003c/code\u003e命令：搜索文件和文件夹\u003c/h1\u003e\n\u003cpre\u003e\u003ccode\u003esudo fd --hidden --no-ignore --exclude /System/Volumes -t d --prune --ignore-case hello-world .\n\u003c/code\u003e\u003c/pre\u003e\n\u003cul\u003e\n\u003cli\u003e--hidden 搜索隐藏文件，MacOs下隐藏文件默认以\u003ccode\u003e.\u003c/code\u003e开头\u003c/li\u003e\n\u003cli\u003e--no-ignore 不要忽略任何文件，如.gitignore\u003c/li\u003e\n\u003cli\u003e--exclude 排除某个特定目录也可以使用管道符进行二次过滤\u003c/li\u003e\n\u003cli\u003e-t 文件类型 \u003ccode\u003ed\u003c/code\u003e表示文件夹 \u003ccode\u003ef\u003c/code\u003e表示文件\u003c/li\u003e\n\u003cli\u003e--prune 这个很有意思。例如要找目录\u003ccode\u003ebook\u003c/code\u003e，匹配到\u003ccode\u003e/a/b/book\u003c/code\u003e后，就会停止查找子目录。避免book目录下还有其他文件夹也叫book，重复查找，属于是浪费时间了。如果搜索的类型是\u003ccode\u003ef\u003c/code\u003e，那么这个参数就不起作用。\u003c/li\u003e\n\u003cli\u003e--ignore-case 搜索时忽略大小写\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e\u003ccode\u003erg\u003c/code\u003e 字符串搜索\u003c/h1\u003e\n\u003cpre\u003e\u003ccode\u003esudo rg --hidden --no-ignore -g '!/System/Volumes/Data/**' --files-with-matches -i hello-world .\n\u003c/code\u003e\u003c/pre\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003e--hidden\u003c/code\u003e 搜索隐藏文件\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e--no-ignore\u003c/code\u003e 搜索ignore文件\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e-g,--glob\u003c/code\u003e 这是glob语法，加\u003ccode\u003e!\u003c/code\u003e可用来排除某些文件夹的也可以使用管道符进行二次过滤\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e-l,--files-with-matches\u003c/code\u003e 输出时只显示匹配到的文件名，不会打印具体的行，如果想输出具体的内容，就不要这个参数\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e--files-without-match\u003c/code\u003e 反选，只输出未匹配到的文件\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e--invert-match\u003c/code\u003e 反选，只输出未匹配到的行\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e-i\u003c/code\u003e 搜索关键字忽略大小写\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e\u003ccode\u003etrash\u003c/code\u003e适用于Mac，将删除的内容放到回收站\u003c/h1\u003e\n\u003cpre\u003e\u003ccode\u003e# 删除文件\ntrash file.txt\n\n# 删除目录\ntrash -r dir\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch1\u003e\u003ccode\u003exargs\u003c/code\u003e\u003c/h1\u003e\n\u003cblockquote\u003e\n\u003cp\u003exargs，将输入数据转换为参数列表传递给其他命令。例如：\u003ccode\u003els\u003c/code\u003e命令列出当前目录下所有的文件，xargs就会把所有文件名组装成一个列表传递给下一条语句执行。有些命令无法通过管道符进行操作，这就是xargs存在的意义。\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003ch3\u003e命令的基本语法如下：\u003c/h3\u003e\n\u003cpre\u003e\u003ccode\u003ecommand | xargs [options] [command]\n\u003c/code\u003e\u003c/pre\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003ecommand\u003c/code\u003e 上一条执行的命令，如\u003ccode\u003els\u003c/code\u003e、\u003ccode\u003egrep\u003c/code\u003e、\u003ccode\u003efind\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eoptions\u003c/code\u003e 一些选项，可以用来控制xargs的行为\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e[command]\u003c/code\u003e 这条命令用于接收xargs传过来的参数。，默认是echo，也就是把xargs的参数列表打印出来\u003c/li\u003e\n\u003c/ul\u003e\n\u003cpre\u003e\u003ccode\u003e# 把当前目录下名字包含hello的文件删除\nls -al | grep hello | xargs trash\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch1\u003e\u003ccode\u003ecurl\u003c/code\u003e命令\u003c/h1\u003e\n\u003cpre\u003e\u003ccode\u003e# 请求网址，并打印出http的请求过程\ncurl -vIL https://www.baidu.com\n# 将baidu.com的首页保存到本地\ncurl -OL https://baidu.com\n\u003c/code\u003e\u003c/pre\u003e\n\u003cul\u003e\n\u003cli\u003e-v 打印完整信息，分析http请求的时候很有用，连三次握手🤝都打印出来了，很给力\u003c/li\u003e\n\u003cli\u003e-L 跟踪网址的重定向，如果不加这个参数，有些网址有重定向，它就不会继续请求\u003c/li\u003e\n\u003cli\u003e-i 打印响应头和响应body\u003c/li\u003e\n\u003cli\u003e-I 只打印响应头\u003c/li\u003e\n\u003cli\u003e-o 将output输出到指定的文件,如\u003ccode\u003e/dev/null\u003c/code\u003e或者\u003ccode\u003etest.abc\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003e-O 将文件写入到本地，文件名=远程资源的文件名，如远程资源为exapmle.com/file/1.txt,那么下载到本地就是1.txt\u003c/li\u003e\n\u003cli\u003e-s slient模式，不打印progress和error信息\u003c/li\u003e\n\u003cli\u003e-S show an error message if it fails\u003c/li\u003e\n\u003cli\u003e--connect-timeout 超时，单位：秒\u003c/li\u003e\n\u003cli\u003e--write-out 可以打印出很多东西，我认为最有价值的就是能够打印出整个网络请求执行时间\n\u003cpre\u003e\u003ccode\u003ecurl -sSL -o /dev/null --connect-timeout 5 --write-out \\\n\"\\n\n[%{time_namelookup}]-\u003e域名解析\\n\n(进行三次握手)\\n\n[%{time_pretransfer}]-\u003e准备传输数据\\n\n(重定向耗时:%{time_redirect} 时间为0说明不需要重定向)\\n\n[%{time_starttransfer}]-\u003e开始传输第一个字节\\n\n[%{time_total}]-\u003e结束\" \\\nhttps://example.com\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e\u003ccode\u003ewget\u003c/code\u003e命令\u003c/h1\u003e\n\u003cpre\u003e\u003ccode\u003e# 可分析http请求链\nwget https://baidu.com --debug -O /dev/null\n\u003c/code\u003e\u003c/pre\u003e\n\u003cblockquote\u003e\n\u003cp\u003e输出信息包括了HTTP请求和响应头，以及网络请求过程中的详细信息\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cpre\u003e\u003ccode\u003e--2023-02-22 23:30:09--  https://www.baidu.com/\nCertificates loaded: 137\n正在解析主机 www.baidu.com (www.baidu.com)... 104.193.88.123, 104.193.88.77\nCaching www.baidu.com =\u003e 104.193.88.123 104.193.88.77\n正在连接 www.baidu.com (www.baidu.com)|104.193.88.123|:443... 已连接。\nCreated socket 4.\nReleasing 0x0000561d53929890 (new refcount 1).\n\n---request begin---\nGET / HTTP/1.1\nUser-Agent: Wget/1.20.1 (linux-gnu)\nAccept: */*\nAccept-Encoding: identity\nHost: www.baidu.com\nConnection: Keep-Alive\n\n---request end---\n已发出 HTTP 请求，正在等待回应...\n---response begin---\nHTTP/1.1 200 OK\nContent-Length: 2381\nContent-Type: text/html\nDate: Wed, 22 Feb 2023 15:30:10 GMT\nServer: bfe\n\n---response end---\n200 OK\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch1\u003e\u003ccode\u003ebrew\u003c/code\u003e\u003c/h1\u003e\n\u003ch2\u003e清理缓存\u003c/h2\u003e\n\u003cpre\u003e\u003ccode\u003e# Remove all cache files older than specified days. If you want to remove everything, use --prune=all\nbrew cleanup --prune=all\n\n# Scrub(means a thorough wash or clean) the cache, including downloads for even the latest versions. Note that downloads for any installed formulae or casks will still not be deleted\nbrew cleanup -s\n\n# Uninstall formulae that were only installed as a dependency of another formula and are now no longer needed.\nbrew autoremove\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch1\u003e后台进程管理\u003c/h1\u003e\n\u003cul\u003e\n\u003cli\u003e\n\u003cp\u003e\u003ccode\u003esystemd\u003c/code\u003e是Linux系统中默认的系统和服务管理器，可以用于管理和控制各种系统服务，包括启动、停止、重启、自启动等\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cp\u003e\u003ccode\u003esupervisor\u003c/code\u003e它适用于需要管理多个进程的环境，例如Web服务器、应用服务器等\u003c/p\u003e\n\u003cp\u003e#也可以通过-c参数指定某一个配置\nsupervisord -c /etc/supervisor/conf.d\n\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cp\u003e\u003ccode\u003enohup\u003c/code\u003e用于在后台运行进程，可以忽略终端断开信号，即使关闭终端也能让进程继续运行。比如某些临时任务，通过代码对资料进行备份\n有时候用这个命令会比较方便，不需要写配置信息啥的\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cp\u003e\u003ccode\u003escreen\u003c/code\u003e当需要通过SSH等协议登录远程主机时，使用Screen可以保持会话的持久性，避免连接断开导致的中断\u003c/p\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n","title":"Linux和Mac常用命令","date":"2023-02-20 00:14:32","cover":null,"category":["编程"]}},"__N_SSG":true},"page":"/posts/[post-id]","query":{"post-id":"202302200014"},"buildId":"r8IffH4Rot9nkeUOtVAIa","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

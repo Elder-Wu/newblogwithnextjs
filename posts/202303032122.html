@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><title>自定义吧</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/967d1b4e659cc37a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/967d1b4e659cc37a.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-87b3a303122f2f0d.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-b05cd08c4a1aceb2.js" defer=""></script><script src="/_next/static/chunks/pages/_app-8d844a22b5bc2cbf.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bpost-id%5D-96780f90c6619010.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_buildManifest.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div>Next-js笔记<br/>2023-03-03 21:22:02<br/><div><h2>在 pages 目录中应该只包含 Next.js 页面组件，这些页面组件应该是应用程序的顶级路由组件，而不是嵌套在其他组件中的子组件。这是因为 pages 目录下的文件仅仅用于配置 Next.js 应用程序的路由，因此它们不应该包含业务逻辑或其他功能</h2>
+<h2>不在pages文件夹下的组件，会被视为服务端(SSR)渲染组件</h2>
+<h2>next/dynamic 动态加载   --->  动态加载只对客户端才有意义</h2>
+<h1>预渲染和数据获取</h1>
+<p>Essentially, <code>getStaticProps</code> allows you to tell Next.js: “Hey, this page has some data dependencies — so when you pre-render this page at build time, make sure to resolve them first!”</p>
+<pre><code>export default function Home(props) { ... }
+
+export async function getStaticProps() {
+  // Get external data from the file system, API, DB, etc.
+  const data = ...
+
+  // The value of the `props` key will be
+  //  passed to the `Home` component
+  return {
+    props: ...
+  }
+}
+</code></pre>
+<h1><a href="https://www.nextjs.cn/docs/api-reference/next.config.js/exportPathMap">exportPathMap</a></h1>
+<p><code>exportPathMap</code> allows you to specify a mapping of request paths to page destinations</p>
+<pre><code>module.exports = {
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/' },
+      '/about': { page: '/about' },
+      '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },
+      '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },
+      '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } },
+    }
+  },
+}
+</code></pre>
+<p><em><strong>Note: the <code>query</code> field in <code>exportPathMap</code> cannot be used with <code>automatically statically optimized pages</code> or <code>getStaticProps</code> pages as they are rendered to HTML files at build-time and additional query information cannot be provided during <code>next export</code></strong></em></p>
+<h2>参数</h2>
+<p><code>exportPathMap</code> is an async function that receives 2 arguments: the first one is <code>defaultPathMap</code>, which is the default map used by Next.js. The second argument is an object with:</p>
+<ul>
+<li><code>dev</code> <code>true</code> when exportPathMap is being called in development. <code>false</code> when running next export. In development exportPathMap is used to define routes</li>
+<li><code>dir</code> Absolute path to the project directory</li>
+<li><code>outdir</code> Absolute path to the out/ directory (configurable with -o). When dev is true the value of outDir will be null.
+<pre><code># 指定输出文件夹
+next export -o outdir
+</code></pre>
+</li>
+<li><code>distdir</code> Absolute path to the .next/ directory (configurable with the distDir config)</li>
+<li><code>buildId</code> The generated build id</li>
+</ul>
+<h1>返回值</h1>
+<p>The returned object is a map of pages where the key is the pathname and the value is an object that accepts the following fields:</p>
+<ul>
+<li><code>page:String</code> the page inside the pages directory to rende</li>
+<li><code>query:Object</code> query的值取决于你的页面配置
+<pre><code>// 有个动态页面/a/b/c/[id]，用户访问"/"时，你希望展示/a/b/c/index"页面，可以这样配置
+return {
+  "/":{page:"/a/b/c",query:{slug:"index"}}
+}
+</code></pre>
+</li>
+</ul>
+</div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postDetail":{"id":"202303032122","contentHtml":"\u003ch2\u003e在 pages 目录中应该只包含 Next.js 页面组件，这些页面组件应该是应用程序的顶级路由组件，而不是嵌套在其他组件中的子组件。这是因为 pages 目录下的文件仅仅用于配置 Next.js 应用程序的路由，因此它们不应该包含业务逻辑或其他功能\u003c/h2\u003e\n\u003ch2\u003e不在pages文件夹下的组件，会被视为服务端(SSR)渲染组件\u003c/h2\u003e\n\u003ch2\u003enext/dynamic 动态加载   ---\u003e  动态加载只对客户端才有意义\u003c/h2\u003e\n\u003ch1\u003e预渲染和数据获取\u003c/h1\u003e\n\u003cp\u003eEssentially, \u003ccode\u003egetStaticProps\u003c/code\u003e allows you to tell Next.js: “Hey, this page has some data dependencies — so when you pre-render this page at build time, make sure to resolve them first!”\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eexport default function Home(props) { ... }\n\nexport async function getStaticProps() {\n  // Get external data from the file system, API, DB, etc.\n  const data = ...\n\n  // The value of the `props` key will be\n  //  passed to the `Home` component\n  return {\n    props: ...\n  }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch1\u003e\u003ca href=\"https://www.nextjs.cn/docs/api-reference/next.config.js/exportPathMap\"\u003eexportPathMap\u003c/a\u003e\u003c/h1\u003e\n\u003cp\u003e\u003ccode\u003eexportPathMap\u003c/code\u003e allows you to specify a mapping of request paths to page destinations\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003emodule.exports = {\n  exportPathMap: async function (\n    defaultPathMap,\n    { dev, dir, outDir, distDir, buildId }\n  ) {\n    return {\n      '/': { page: '/' },\n      '/about': { page: '/about' },\n      '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },\n      '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },\n      '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } },\n    }\n  },\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003cem\u003e\u003cstrong\u003eNote: the \u003ccode\u003equery\u003c/code\u003e field in \u003ccode\u003eexportPathMap\u003c/code\u003e cannot be used with \u003ccode\u003eautomatically statically optimized pages\u003c/code\u003e or \u003ccode\u003egetStaticProps\u003c/code\u003e pages as they are rendered to HTML files at build-time and additional query information cannot be provided during \u003ccode\u003enext export\u003c/code\u003e\u003c/strong\u003e\u003c/em\u003e\u003c/p\u003e\n\u003ch2\u003e参数\u003c/h2\u003e\n\u003cp\u003e\u003ccode\u003eexportPathMap\u003c/code\u003e is an async function that receives 2 arguments: the first one is \u003ccode\u003edefaultPathMap\u003c/code\u003e, which is the default map used by Next.js. The second argument is an object with:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003edev\u003c/code\u003e \u003ccode\u003etrue\u003c/code\u003e when exportPathMap is being called in development. \u003ccode\u003efalse\u003c/code\u003e when running next export. In development exportPathMap is used to define routes\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003edir\u003c/code\u003e Absolute path to the project directory\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eoutdir\u003c/code\u003e Absolute path to the out/ directory (configurable with -o). When dev is true the value of outDir will be null.\n\u003cpre\u003e\u003ccode\u003e# 指定输出文件夹\nnext export -o outdir\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003edistdir\u003c/code\u003e Absolute path to the .next/ directory (configurable with the distDir config)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003ebuildId\u003c/code\u003e The generated build id\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e返回值\u003c/h1\u003e\n\u003cp\u003eThe returned object is a map of pages where the key is the pathname and the value is an object that accepts the following fields:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003epage:String\u003c/code\u003e the page inside the pages directory to rende\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003equery:Object\u003c/code\u003e query的值取决于你的页面配置\n\u003cpre\u003e\u003ccode\u003e// 有个动态页面/a/b/c/[id]，用户访问\"/\"时，你希望展示/a/b/c/index\"页面，可以这样配置\nreturn {\n  \"/\":{page:\"/a/b/c\",query:{slug:\"index\"}}\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n","title":"Next-js笔记","date":"2023-03-03 21:22:02","cover":null,"category":[]}},"__N_SSG":true},"page":"/posts/[post-id]","query":{"post-id":"202303032122"},"buildId":"r8IffH4Rot9nkeUOtVAIa","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

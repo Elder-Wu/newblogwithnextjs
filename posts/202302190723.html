@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><title>自定义吧</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/967d1b4e659cc37a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/967d1b4e659cc37a.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-87b3a303122f2f0d.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-b05cd08c4a1aceb2.js" defer=""></script><script src="/_next/static/chunks/pages/_app-8d844a22b5bc2cbf.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bpost-id%5D-96780f90c6619010.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_buildManifest.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div>搭建hexo和butterfly<br/>2023-02-19 07:23:02<br/><div><h1>安装流程</h1>
+<ul>
+<li>安装和配置都很简单，直接去官网和Git仓库看教程就行</li>
+</ul>
+<h1>更新</h1>
+<ul>
+<li>用npm更新hexo</li>
+</ul>
+<h1>需要注意的点</h1>
+<ol>
+<li>项目中用到了站内搜索algolia，所以每次部署网站之前，都要执行下<code>hexo algolia</code>这个命令，把本地的文档同步到远程</li>
+<li>后面有空了会补充一个功能：调用api自动生成文章的description，tag和category，有利于seo优化，同时ai生成文章概要的方式也比较高效</li>
+</ol>
+<h1>这个主题东西太多，会加载很多用不到的资源，影响体验。搭建完成后，使用在线分析工具，测一下访问速度</h1>
+<ul>
+<li>图片处理：Cloudflare+blackblaze</li>
+<li>代码托管：netlify或者github
+<blockquote>
+<p>netlify的优点是响应速度快，缺点是每次它自动部署的时候都会把所有文件都覆盖，导致文件的meta信息[修改时间]变动，网页排版出现问题。hexo的文件排版是依赖‘文件修改时间’这个变量的
+github的优点是不会覆盖所有文件，缺点就是速度太慢了</p>
+</blockquote>
+</li>
+<li>公共CDN：七牛云和掘金出品的“Staticfile CDN”</li>
+</ul>
+<h2>后续网站迁移流程：只需要修改CDN记录，让域名指向新的仓库就好了</h2>
+</div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postDetail":{"id":"202302190723","contentHtml":"\u003ch1\u003e安装流程\u003c/h1\u003e\n\u003cul\u003e\n\u003cli\u003e安装和配置都很简单，直接去官网和Git仓库看教程就行\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e更新\u003c/h1\u003e\n\u003cul\u003e\n\u003cli\u003e用npm更新hexo\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e需要注意的点\u003c/h1\u003e\n\u003col\u003e\n\u003cli\u003e项目中用到了站内搜索algolia，所以每次部署网站之前，都要执行下\u003ccode\u003ehexo algolia\u003c/code\u003e这个命令，把本地的文档同步到远程\u003c/li\u003e\n\u003cli\u003e后面有空了会补充一个功能：调用api自动生成文章的description，tag和category，有利于seo优化，同时ai生成文章概要的方式也比较高效\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch1\u003e这个主题东西太多，会加载很多用不到的资源，影响体验。搭建完成后，使用在线分析工具，测一下访问速度\u003c/h1\u003e\n\u003cul\u003e\n\u003cli\u003e图片处理：Cloudflare+blackblaze\u003c/li\u003e\n\u003cli\u003e代码托管：netlify或者github\n\u003cblockquote\u003e\n\u003cp\u003enetlify的优点是响应速度快，缺点是每次它自动部署的时候都会把所有文件都覆盖，导致文件的meta信息[修改时间]变动，网页排版出现问题。hexo的文件排版是依赖‘文件修改时间’这个变量的\ngithub的优点是不会覆盖所有文件，缺点就是速度太慢了\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e公共CDN：七牛云和掘金出品的“Staticfile CDN”\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e后续网站迁移流程：只需要修改CDN记录，让域名指向新的仓库就好了\u003c/h2\u003e\n","title":"搭建hexo和butterfly","date":"2023-02-19 07:23:02","cover":null,"category":["编程"]}},"__N_SSG":true},"page":"/posts/[post-id]","query":{"post-id":"202302190723"},"buildId":"r8IffH4Rot9nkeUOtVAIa","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><title>自定义吧</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/967d1b4e659cc37a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/967d1b4e659cc37a.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-87b3a303122f2f0d.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-b05cd08c4a1aceb2.js" defer=""></script><script src="/_next/static/chunks/pages/_app-8d844a22b5bc2cbf.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bpost-id%5D-96780f90c6619010.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_buildManifest.js" defer=""></script><script src="/_next/static/r8IffH4Rot9nkeUOtVAIa/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div>React笔记<br/>2023-03-03 08:25:15<br/><div><h1>4. 组件 &#x26; Props</h1>
+<blockquote>
+<p>函数组件
+函数组件是一种纯函数，只接受输入的 props，并返回需要渲染的元素。函数组件通常比类组件更简单、更易于理解、更容易测试和维护。因为函数组件没有 state 和生命周期方法，因此通常适用于以下场景：</p>
+</blockquote>
+<ul>
+<li>当只需要基于传递给组件的 props 来渲染 UI 时</li>
+<li>当只需要编写一个简单的组件来执行某些特定的功能，例如渲染列表或图表</li>
+</ul>
+<blockquote>
+<p>类组件
+类组件是一种继承 React.Component 类的 JavaScript 类，具有 state 和生命周期方法。类组件适用于以下场景</p>
+</blockquote>
+<ul>
+<li>当需要在组件中使用 state 和生命周期方法时，例如有状态的表单组件和有复杂交互的 UI 组件</li>
+<li>当需要使用 Refs 访问 DOM 元素时，例如处理焦点、动画和媒体播放器等</li>
+</ul>
+<h1>5. State &#x26; 生命周期</h1>
+<p>state是可变的，props是不可变的</p>
+<h1>6. 事件处理</h1>
+<p>The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.
+bind()函数创建一个新的函数，将<code>this</code>关键字指向绑定的值。另外，还可以在 bind() 方法的第二个参数之后传递一些参数。这些参数将被预先传递给绑定的函数，在调用绑定的函数时这些参数会在提供的参数之前传递</p>
+<pre><code>class TextEditor extends React.Component {
+	constructor(props){
+		this.onTextChange = this.onTextChange.bind(this)
+	}
+
+	function onTextChange(e){
+		// do sth
+	}
+}
+</code></pre>
+<h1>9. 表单</h1>
+<blockquote>
+<p>受控组件
+受控组件是指由 React 控制表单数据的组件。在受控组件中，表单数据通过 props 传递给组件，并且由组件自身来处理表单数据的变化。当表单数据发生变化时，组件会通过回调函数来更新组件的 state，从而重新渲染组件。这样，在受控组件中，表单数据始终由 React 来控制，因此称为“受控”。</p>
+</blockquote>
+<blockquote>
+<p>非受控组件
+非受控组件是指由 DOM 控制表单数据的组件。在非受控组件中，表单数据由 DOM 元素本身来管理，而不是通过 React 组件的 state 来管理。因此，在非受控组件中，表单数据的变化不会被 React 直接感知到，需要通过 Refs 来获取表单数据</p>
+</blockquote>
+<h1>10. 状态提升</h1>
+<p>状态提升其实就是子组件通过回调函数通知父组件，自己的状态改变了。回调函数是放在props对象中的。
+例如props.onTextChange(e)</p>
+<h1>11. 继承</h1>
+<p>在 Facebook，我们在成百上千个组件中使用 React。我们并没有发现需要使用继承来构建组件层次的情况</p>
+<p></p>
+<h1>[高级]Refs转发</h1>
+<p>有时间再看</p>
+<h1>[高级]高阶组件</h1>
+<p>有时间再看</p>
+</div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postDetail":{"id":"202303030825","contentHtml":"\u003ch1\u003e4. 组件 \u0026#x26; Props\u003c/h1\u003e\n\u003cblockquote\u003e\n\u003cp\u003e函数组件\n函数组件是一种纯函数，只接受输入的 props，并返回需要渲染的元素。函数组件通常比类组件更简单、更易于理解、更容易测试和维护。因为函数组件没有 state 和生命周期方法，因此通常适用于以下场景：\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cul\u003e\n\u003cli\u003e当只需要基于传递给组件的 props 来渲染 UI 时\u003c/li\u003e\n\u003cli\u003e当只需要编写一个简单的组件来执行某些特定的功能，例如渲染列表或图表\u003c/li\u003e\n\u003c/ul\u003e\n\u003cblockquote\u003e\n\u003cp\u003e类组件\n类组件是一种继承 React.Component 类的 JavaScript 类，具有 state 和生命周期方法。类组件适用于以下场景\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cul\u003e\n\u003cli\u003e当需要在组件中使用 state 和生命周期方法时，例如有状态的表单组件和有复杂交互的 UI 组件\u003c/li\u003e\n\u003cli\u003e当需要使用 Refs 访问 DOM 元素时，例如处理焦点、动画和媒体播放器等\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e5. State \u0026#x26; 生命周期\u003c/h1\u003e\n\u003cp\u003estate是可变的，props是不可变的\u003c/p\u003e\n\u003ch1\u003e6. 事件处理\u003c/h1\u003e\n\u003cp\u003eThe bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.\nbind()函数创建一个新的函数，将\u003ccode\u003ethis\u003c/code\u003e关键字指向绑定的值。另外，还可以在 bind() 方法的第二个参数之后传递一些参数。这些参数将被预先传递给绑定的函数，在调用绑定的函数时这些参数会在提供的参数之前传递\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eclass TextEditor extends React.Component {\n\tconstructor(props){\n\t\tthis.onTextChange = this.onTextChange.bind(this)\n\t}\n\n\tfunction onTextChange(e){\n\t\t// do sth\n\t}\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch1\u003e9. 表单\u003c/h1\u003e\n\u003cblockquote\u003e\n\u003cp\u003e受控组件\n受控组件是指由 React 控制表单数据的组件。在受控组件中，表单数据通过 props 传递给组件，并且由组件自身来处理表单数据的变化。当表单数据发生变化时，组件会通过回调函数来更新组件的 state，从而重新渲染组件。这样，在受控组件中，表单数据始终由 React 来控制，因此称为“受控”。\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cblockquote\u003e\n\u003cp\u003e非受控组件\n非受控组件是指由 DOM 控制表单数据的组件。在非受控组件中，表单数据由 DOM 元素本身来管理，而不是通过 React 组件的 state 来管理。因此，在非受控组件中，表单数据的变化不会被 React 直接感知到，需要通过 Refs 来获取表单数据\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003ch1\u003e10. 状态提升\u003c/h1\u003e\n\u003cp\u003e状态提升其实就是子组件通过回调函数通知父组件，自己的状态改变了。回调函数是放在props对象中的。\n例如props.onTextChange(e)\u003c/p\u003e\n\u003ch1\u003e11. 继承\u003c/h1\u003e\n\u003cp\u003e在 Facebook，我们在成百上千个组件中使用 React。我们并没有发现需要使用继承来构建组件层次的情况\u003c/p\u003e\n\u003cp\u003e\u003c/p\u003e\n\u003ch1\u003e[高级]Refs转发\u003c/h1\u003e\n\u003cp\u003e有时间再看\u003c/p\u003e\n\u003ch1\u003e[高级]高阶组件\u003c/h1\u003e\n\u003cp\u003e有时间再看\u003c/p\u003e\n","title":"React笔记","date":"2023-03-03 08:25:15","cover":null,"category":[]}},"__N_SSG":true},"page":"/posts/[post-id]","query":{"post-id":"202303030825"},"buildId":"r8IffH4Rot9nkeUOtVAIa","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
